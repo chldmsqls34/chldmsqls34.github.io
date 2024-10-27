@@ -21,7 +21,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # 단순히 배포만 수행하기에 하나의 잡으로만 구성
   deploy:
     environment:
       name: github-pages
@@ -39,12 +38,11 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+      - name: Disable Jekyll
+        run: echo '' > ./dist/.nojekyll
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # dist 디렉터리 업로드
           path: './dist'
       - name: Deploy to GitHub Pages
         id: deployment
